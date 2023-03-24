@@ -1,0 +1,5 @@
+{% macro head(config) %}
+<meta name="viewport" content="width=device-width, max-width=300px, initial-scale=1">
+<meta charset="utf-8">
+<link rel="stylesheet" href="{{ get_url(path="style.css", trailing_slash=false) | safe }}">
+{% endmacro head %}

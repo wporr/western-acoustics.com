@@ -1,0 +1,75 @@
+{% import "macros/head.html" as headmacros -%}
+
+<!DOCTYPE html>
+<html lang="en-US">
+
+<script type="text/javascript" src="{{ 'js/carousel.js' }}"></script>
+
+<title>{%- block title %}{{ section.title }}{% endblock title -%}</title>
+
+{{ headmacros::head(config=section) }}
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="rss.xml") }}">
+
+{%- if section.extra.favicon %}
+<link rel="shortcut icon" type="{{ section.extra.favicon_mimetype | default(value="image/x-icon") }}" href="{{ section.extra.favicon | safe }}">
+{% endif -%}
+
+<header>
+  <div class="title"><a href="/">{{ section.title }}</a></div>
+  <hr class="hr-thin">
+  <div class="nav">
+    <a href="{{ get_url(path='/') }}">Home</a>
+    <a href="{{ get_url(path='/loudspeakers') }}">Loudspeakers</a>
+    <a href="{{ get_url(path='/publications') }}">Publications</a>
+  </div>
+</header>
+
+<div class="panels">
+  <div class="panel">
+    <div class="content">
+      {{ section.content | safe }}
+
+      <div style="text-align: right; margin: 0px">
+        <p>
+        Inquiries:
+        </br>
+
+        liam at acmesf dot com
+        </p>
+      </div>
+  </div>
+</div>
+</div>
+
+<div class="panels">
+  <div id="carousel panel" class="carousel panel">
+      {% set gallerydata = load_data(path="content/gallery.yaml") %}
+      <div class="carousel-buttons">
+      {%- for galleryitem in gallerydata -%}
+          <div class="carousel-button carousel-group-" id="carousel-button-{{ loop.index }}">{{ loop.index }}</div>
+      {% endfor -%}
+      </div>
+      {%- for galleryitem in gallerydata -%}
+      <div class="carousel-content carousel-group-" id="carousel-content-{{ loop.index }}">
+          <img src="{{ get_url(path=galleryitem.img_url) }}">
+          <a style="align-self: flex-end; margin-bottom: -3px; margin-left:-1px" href="{{ get_url(path=galleryitem.url) }}" class="arrow-button">
+            <img class="arrow-button-img" src="{{ get_url(path='img/arrow_button.svg') }}">
+          </a>
+      </div>
+      {% endfor -%}
+  </div>
+  <div class="panel">
+    <p>Our philosophy </p>
+    <hr class="hr-thin">
+    <ul>
+      <li>Loudspeakers are tools</li>
+      <li>Aesthetics follow competent design</li>
+      <li>Most engineering solutions involve tradeoffs</li>
+      <li>Embrace new improvements</li>
+      <li>Beware the cargo cults</li>
+      <li>Quality takes time</li>
+    </ul>
+  </div>
+</div>
+
